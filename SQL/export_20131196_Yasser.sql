@@ -1,0 +1,555 @@
+--------------------------------------------------------
+--  File created - Friday-June-03-2016   
+--------------------------------------------------------
+DROP TABLE "C##20131196"."BOOK" cascade constraints;
+DROP TABLE "C##20131196"."BOOKTYPE" cascade constraints;
+DROP TABLE "C##20131196"."MEMBER" cascade constraints;
+DROP TABLE "C##20131196"."MEMBERTYPE" cascade constraints;
+DROP TABLE "C##20131196"."PERSONS" cascade constraints;
+DROP TABLE "C##20131196"."RACK" cascade constraints;
+DROP TABLE "C##20131196"."TEMP" cascade constraints;
+DROP TABLE "C##20131196"."TRANSACTIONS" cascade constraints;
+DROP SEQUENCE "C##20131196"."COMP_TEAM_PROJECT_SEQUENCE";
+DROP SEQUENCE "C##20131196"."COMP_TEAM_SEQUENCE";
+DROP SEQUENCE "C##20131196"."EMPLOYEE_ID_SEQUENCE";
+DROP SEQUENCE "C##20131196"."ID_SEQ";
+DROP SEQUENCE "C##20131196"."PROJECT_ID_SEQUENCE";
+DROP SEQUENCE "C##20131196"."TEAM_EMPLOYEE_SEQUENCE";
+DROP SEQUENCE "C##20131196"."TRANSACTION_ID_SEQ";
+DROP VIEW "C##20131196"."EMPLOYEES_VIEW";
+DROP FUNCTION "C##20131196"."GET_TOTAL_BORROW_COUNT";
+DROP FUNCTION "C##20131196"."IS_BOOK_AVAILABLE";
+DROP FUNCTION "C##20131196"."MAXIMUM_BOOK_LIMIT";
+DROP FUNCTION "C##20131196"."MEMBER_HAS_OVERDUE_BOOK";
+DROP PROCEDURE "C##20131196"."BORROW_A_BOOK";
+DROP PROCEDURE "C##20131196"."RETURN_A_BOOK";
+--------------------------------------------------------
+--  DDL for Sequence COMP_TEAM_PROJECT_SEQUENCE
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "C##20131196"."COMP_TEAM_PROJECT_SEQUENCE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE  NOPARTITION ;
+--------------------------------------------------------
+--  DDL for Sequence COMP_TEAM_SEQUENCE
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "C##20131196"."COMP_TEAM_SEQUENCE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE  NOPARTITION ;
+--------------------------------------------------------
+--  DDL for Sequence EMPLOYEE_ID_SEQUENCE
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "C##20131196"."EMPLOYEE_ID_SEQUENCE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 2 NOCACHE  NOORDER  NOCYCLE  NOPARTITION ;
+--------------------------------------------------------
+--  DDL for Sequence ID_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "C##20131196"."ID_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 2 START WITH 41 CACHE 20 NOORDER  NOCYCLE  NOPARTITION ;
+--------------------------------------------------------
+--  DDL for Sequence PROJECT_ID_SEQUENCE
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "C##20131196"."PROJECT_ID_SEQUENCE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1000 NOCACHE  NOORDER  NOCYCLE  NOPARTITION ;
+--------------------------------------------------------
+--  DDL for Sequence TEAM_EMPLOYEE_SEQUENCE
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "C##20131196"."TEAM_EMPLOYEE_SEQUENCE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE  NOPARTITION ;
+--------------------------------------------------------
+--  DDL for Sequence TRANSACTION_ID_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "C##20131196"."TRANSACTION_ID_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 42 CACHE 20 NOORDER  NOCYCLE  NOPARTITION ;
+--------------------------------------------------------
+--  DDL for Table BOOK
+--------------------------------------------------------
+
+  CREATE TABLE "C##20131196"."BOOK" 
+   (	"BOOK_ID" NUMBER, 
+	"NAME" VARCHAR2(20 BYTE), 
+	"AUTHOR" VARCHAR2(20 BYTE), 
+	"EDITION" NUMBER, 
+	"BOOK_TYPE_ID" NUMBER, 
+	"RACK_ID" NUMBER, 
+	"DATE_OF_PURCHASE" DATE
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table BOOKTYPE
+--------------------------------------------------------
+
+  CREATE TABLE "C##20131196"."BOOKTYPE" 
+   (	"BOOK_TYPE_ID" NUMBER, 
+	"NAME" VARCHAR2(20 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table MEMBER
+--------------------------------------------------------
+
+  CREATE TABLE "C##20131196"."MEMBER" 
+   (	"MEMBER_ID" NUMBER, 
+	"NAME" VARCHAR2(20 BYTE), 
+	"ADDRESS" VARCHAR2(20 BYTE), 
+	"PHONE_NO" VARCHAR2(20 BYTE), 
+	"MEMBER_TYPE_ID" NUMBER
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table MEMBERTYPE
+--------------------------------------------------------
+
+  CREATE TABLE "C##20131196"."MEMBERTYPE" 
+   (	"MEMBER_TYPE_ID" NUMBER, 
+	"NAME" VARCHAR2(20 BYTE), 
+	"MAX_BOOK_LIMIT" NUMBER
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table PERSONS
+--------------------------------------------------------
+
+  CREATE TABLE "C##20131196"."PERSONS" 
+   (	"PERSONID" NUMBER(*,0), 
+	"LASTNAME" VARCHAR2(255 BYTE), 
+	"FIRSTNAME" VARCHAR2(255 BYTE), 
+	"ADDRESS" VARCHAR2(255 BYTE), 
+	"CITY" VARCHAR2(255 BYTE)
+   ) SEGMENT CREATION DEFERRED 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table RACK
+--------------------------------------------------------
+
+  CREATE TABLE "C##20131196"."RACK" 
+   (	"RACK_ID" NUMBER, 
+	"RACK_NO" NUMBER, 
+	"DEFINITION" VARCHAR2(20 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table TEMP
+--------------------------------------------------------
+
+  CREATE TABLE "C##20131196"."TEMP" 
+   (	"ID" NUMBER(10,0), 
+	"FULL_NAME" VARCHAR2(50 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table TRANSACTIONS
+--------------------------------------------------------
+
+  CREATE TABLE "C##20131196"."TRANSACTIONS" 
+   (	"TRANSACTION_ID" NUMBER, 
+	"MEMBER_ID" NUMBER, 
+	"BOOK_ID" NUMBER, 
+	"ISSUE_DATE" DATE, 
+	"DUE_DATE" DATE, 
+	"RETURN_DATE" DATE
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for View EMPLOYEES_VIEW
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE EDITIONABLE VIEW "C##20131196"."EMPLOYEES_VIEW" ("FIRST_NAME", "LAST_NAME", "JOB_ID") AS 
+  SELECT first_name, last_name, job_id
+FROM system.employees;
+REM INSERTING into C##20131196.BOOK
+SET DEFINE OFF;
+Insert into C##20131196.BOOK (BOOK_ID,NAME,AUTHOR,EDITION,BOOK_TYPE_ID,RACK_ID,DATE_OF_PURCHASE) values (1,'the_cradle_will_fall','Mary',1,1,1,to_date('13-JUN-13','DD-MON-RR'));
+Insert into C##20131196.BOOK (BOOK_ID,NAME,AUTHOR,EDITION,BOOK_TYPE_ID,RACK_ID,DATE_OF_PURCHASE) values (2,'The_7_habits','Stephen',2,2,2,to_date('11-JUN-12','DD-MON-RR'));
+Insert into C##20131196.BOOK (BOOK_ID,NAME,AUTHOR,EDITION,BOOK_TYPE_ID,RACK_ID,DATE_OF_PURCHASE) values (3,'Peculiar_childrens','Riggs',3,1,3,to_date('09-JUN-10','DD-MON-RR'));
+REM INSERTING into C##20131196.BOOKTYPE
+SET DEFINE OFF;
+Insert into C##20131196.BOOKTYPE (BOOK_TYPE_ID,NAME) values (1,'normal_paper');
+Insert into C##20131196.BOOKTYPE (BOOK_TYPE_ID,NAME) values (2,'paper_back');
+REM INSERTING into C##20131196.MEMBER
+SET DEFINE OFF;
+Insert into C##20131196.MEMBER (MEMBER_ID,NAME,ADDRESS,PHONE_NO,MEMBER_TYPE_ID) values (1,'Yasser','Haspolat','+905428658745',1);
+Insert into C##20131196.MEMBER (MEMBER_ID,NAME,ADDRESS,PHONE_NO,MEMBER_TYPE_ID) values (2,'Zubeyde','Istanbul','+5298498548654',2);
+Insert into C##20131196.MEMBER (MEMBER_ID,NAME,ADDRESS,PHONE_NO,MEMBER_TYPE_ID) values (3,'James','England','+56849845485',3);
+Insert into C##20131196.MEMBER (MEMBER_ID,NAME,ADDRESS,PHONE_NO,MEMBER_TYPE_ID) values (4,'Jafar','mohtaseb','+644886464586',2);
+Insert into C##20131196.MEMBER (MEMBER_ID,NAME,ADDRESS,PHONE_NO,MEMBER_TYPE_ID) values (5,'funda','haspolat','+65484654898787',1);
+REM INSERTING into C##20131196.MEMBERTYPE
+SET DEFINE OFF;
+Insert into C##20131196.MEMBERTYPE (MEMBER_TYPE_ID,NAME,MAX_BOOK_LIMIT) values (1,'free',1);
+Insert into C##20131196.MEMBERTYPE (MEMBER_TYPE_ID,NAME,MAX_BOOK_LIMIT) values (2,'semi_pro',2);
+Insert into C##20131196.MEMBERTYPE (MEMBER_TYPE_ID,NAME,MAX_BOOK_LIMIT) values (3,'pro',3);
+REM INSERTING into C##20131196.PERSONS
+SET DEFINE OFF;
+REM INSERTING into C##20131196.RACK
+SET DEFINE OFF;
+Insert into C##20131196.RACK (RACK_ID,RACK_NO,DEFINITION) values (1,20,'Novels');
+Insert into C##20131196.RACK (RACK_ID,RACK_NO,DEFINITION) values (2,21,'Scientific_books');
+Insert into C##20131196.RACK (RACK_ID,RACK_NO,DEFINITION) values (3,22,'Personal_dev_books');
+REM INSERTING into C##20131196.TEMP
+SET DEFINE OFF;
+Insert into C##20131196.TEMP (ID,FULL_NAME) values (1,'yasser');
+REM INSERTING into C##20131196.TRANSACTIONS
+SET DEFINE OFF;
+Insert into C##20131196.TRANSACTIONS (TRANSACTION_ID,MEMBER_ID,BOOK_ID,ISSUE_DATE,DUE_DATE,RETURN_DATE) values (1,1,2,to_date('26-MAY-16','DD-MON-RR'),to_date('01-JUN-16','DD-MON-RR'),null);
+Insert into C##20131196.TRANSACTIONS (TRANSACTION_ID,MEMBER_ID,BOOK_ID,ISSUE_DATE,DUE_DATE,RETURN_DATE) values (22,2,1,to_date('01-JUN-16','DD-MON-RR'),to_date('01-FEB-17','DD-MON-RR'),null);
+--------------------------------------------------------
+--  DDL for Index TRANSACTIONS_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "C##20131196"."TRANSACTIONS_PK" ON "C##20131196"."TRANSACTIONS" ("TRANSACTION_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index BOOK_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "C##20131196"."BOOK_PK" ON "C##20131196"."BOOK" ("BOOK_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index MEMBER_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "C##20131196"."MEMBER_PK" ON "C##20131196"."MEMBER" ("MEMBER_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index BOOKTYPE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "C##20131196"."BOOKTYPE_PK" ON "C##20131196"."BOOKTYPE" ("BOOK_TYPE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index RACK_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "C##20131196"."RACK_PK" ON "C##20131196"."RACK" ("RACK_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index MEMBERTYPE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "C##20131196"."MEMBERTYPE_PK" ON "C##20131196"."MEMBERTYPE" ("MEMBER_TYPE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  Constraints for Table RACK
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."RACK" MODIFY ("RACK_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."RACK" MODIFY ("RACK_NO" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."RACK" MODIFY ("DEFINITION" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."RACK" ADD CONSTRAINT "RACK_PK" PRIMARY KEY ("RACK_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table BOOKTYPE
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."BOOKTYPE" MODIFY ("BOOK_TYPE_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."BOOKTYPE" MODIFY ("NAME" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."BOOKTYPE" ADD CONSTRAINT "BOOKTYPE_PK" PRIMARY KEY ("BOOK_TYPE_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table MEMBER
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."MEMBER" MODIFY ("MEMBER_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."MEMBER" MODIFY ("NAME" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."MEMBER" MODIFY ("ADDRESS" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."MEMBER" MODIFY ("PHONE_NO" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."MEMBER" MODIFY ("MEMBER_TYPE_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."MEMBER" ADD CONSTRAINT "MEMBER_PK" PRIMARY KEY ("MEMBER_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table BOOK
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."BOOK" MODIFY ("NAME" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."BOOK" MODIFY ("AUTHOR" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."BOOK" MODIFY ("EDITION" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."BOOK" MODIFY ("BOOK_TYPE_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."BOOK" MODIFY ("RACK_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."BOOK" MODIFY ("DATE_OF_PURCHASE" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."BOOK" MODIFY ("BOOK_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."BOOK" ADD CONSTRAINT "BOOK_PK" PRIMARY KEY ("BOOK_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table TRANSACTIONS
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."TRANSACTIONS" MODIFY ("TRANSACTION_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."TRANSACTIONS" MODIFY ("MEMBER_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."TRANSACTIONS" MODIFY ("BOOK_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."TRANSACTIONS" MODIFY ("ISSUE_DATE" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."TRANSACTIONS" MODIFY ("DUE_DATE" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."TRANSACTIONS" ADD CONSTRAINT "TRANSACTIONS_PK" PRIMARY KEY ("TRANSACTION_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table MEMBERTYPE
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."MEMBERTYPE" MODIFY ("MEMBER_TYPE_ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."MEMBERTYPE" MODIFY ("NAME" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."MEMBERTYPE" MODIFY ("MAX_BOOK_LIMIT" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."MEMBERTYPE" ADD CONSTRAINT "MEMBERTYPE_PK" PRIMARY KEY ("MEMBER_TYPE_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table TEMP
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."TEMP" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "C##20131196"."TEMP" MODIFY ("FULL_NAME" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Ref Constraints for Table BOOK
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."BOOK" ADD CONSTRAINT "BOOK_FK1" FOREIGN KEY ("BOOK_TYPE_ID")
+	  REFERENCES "C##20131196"."BOOKTYPE" ("BOOK_TYPE_ID") ENABLE;
+  ALTER TABLE "C##20131196"."BOOK" ADD CONSTRAINT "BOOK_FK2" FOREIGN KEY ("RACK_ID")
+	  REFERENCES "C##20131196"."RACK" ("RACK_ID") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table MEMBER
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."MEMBER" ADD CONSTRAINT "MEMBER_FK1" FOREIGN KEY ("MEMBER_TYPE_ID")
+	  REFERENCES "C##20131196"."MEMBERTYPE" ("MEMBER_TYPE_ID") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table TRANSACTIONS
+--------------------------------------------------------
+
+  ALTER TABLE "C##20131196"."TRANSACTIONS" ADD CONSTRAINT "TRANSACTIONS_FK1" FOREIGN KEY ("BOOK_ID")
+	  REFERENCES "C##20131196"."BOOK" ("BOOK_ID") ENABLE;
+  ALTER TABLE "C##20131196"."TRANSACTIONS" ADD CONSTRAINT "TRANSACTIONS_FK2" FOREIGN KEY ("MEMBER_ID")
+	  REFERENCES "C##20131196"."MEMBER" ("MEMBER_ID") ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger CHECK_CAN_BORROW_BOOK_TRG
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE TRIGGER "C##20131196"."CHECK_CAN_BORROW_BOOK_TRG" 
+BEFORE INSERT ON transactions 
+FOR EACH ROW
+DECLARE
+book_is_available number;
+due_is_available number;
+can_borrow number;
+BEGIN
+book_is_available := is_book_available(:new.book_id);
+due_is_available := member_has_overdue_book(:new.member_id);
+can_borrow := maximum_book_limit(:new.member_id) - get_total_borrow_count(:new.member_id);
+
+if book_is_available=0 THEN
+raise_application_error(-20113,'The book is not available!');
+END IF;
+
+if due_is_available=1 THEN
+raise_application_error(-20113,'The member is having a due!');
+END IF;
+
+If can_borrow = 0 THEN
+raise_application_error(-20113,'The member can not borrow any more books!');
+END IF;
+END;
+/
+ALTER TRIGGER "C##20131196"."CHECK_CAN_BORROW_BOOK_TRG" ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger TRANSACTION_INCREMENT
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE TRIGGER "C##20131196"."TRANSACTION_INCREMENT" 
+BEFORE INSERT ON transactions 
+FOR EACH ROW
+BEGIN
+  SELECT transaction_id_seq.NEXTVAL
+  INTO   :new.transaction_id
+  FROM   dual;
+END;
+
+
+
+/*INSERT INTO transactions (member_id,BOOK_ID, issue_date, due_date) 
+VALUES(3,2,'01-JUN-16','17-JUN-16');*/
+/
+ALTER TRIGGER "C##20131196"."TRANSACTION_INCREMENT" ENABLE;
+--------------------------------------------------------
+--  DDL for Function GET_TOTAL_BORROW_COUNT
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "C##20131196"."GET_TOTAL_BORROW_COUNT" (id IN number)
+RETURN number IS
+borrowed_books number;
+BEGIN
+select count(*) into borrowed_books from transactions where member_id=id AND return_date IS NULL  group by member_id;
+RETURN borrowed_books;
+EXCEPTION
+WHEN NO_DATA_FOUND then
+RETURN -1;
+END;
+
+/
+--------------------------------------------------------
+--  DDL for Function IS_BOOK_AVAILABLE
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "C##20131196"."IS_BOOK_AVAILABLE" (id IN number)
+RETURN number IS
+
+cursor c is select * from transactions;
+c_row c%rowtype;
+v_id number;
+BEGIN
+for c_row in c
+loop
+select book_id into v_id from transactions where book_id=id AND return_date IS NOT NULL;
+END loop;
+EXCEPTION
+When NO_DATA_FOUND THEN
+Return 1;
+END;
+
+/
+--------------------------------------------------------
+--  DDL for Function MAXIMUM_BOOK_LIMIT
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "C##20131196"."MAXIMUM_BOOK_LIMIT" (id IN number)
+RETURN number IS
+max_number number :=-1;
+BEGIN
+select max_book_limit into max_number from membertype where member_type_id IN 
+(select member_type_id from member where member_id=id); 
+RETURN max_number;
+EXCEPTION
+WHEN NO_DATA_FOUND then
+RETURN max_number;
+END;
+
+/
+--------------------------------------------------------
+--  DDL for Function MEMBER_HAS_OVERDUE_BOOK
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "C##20131196"."MEMBER_HAS_OVERDUE_BOOK" (id IN number)
+RETURN number IS
+overdue number := 0;
+cursor c is select * from transactions;
+c_row c%rowtype;
+v_id number;
+BEGIN
+for c_row in c
+Loop
+select member_id into overdue from transactions where member_id=id AND due_date<SYSDATE AND return_date IS NULL;
+overdue :=1;
+RETURN overdue;
+END LOOP;
+EXCEPTION
+WHEN NO_DATA_FOUND then
+RETURN overdue;
+END;
+
+/
+--------------------------------------------------------
+--  DDL for Procedure BORROW_A_BOOK
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "C##20131196"."BORROW_A_BOOK" (member_id IN number, book_id IN number, issue_date IN date, due_date IN date)
+AS
+BEGIN
+INSERT INTO transactions (member_id,BOOK_ID, issue_date, due_date) 
+VALUES(member_id,book_id,issue_date,due_date);
+END;
+
+/
+--------------------------------------------------------
+--  DDL for Procedure RETURN_A_BOOK
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "C##20131196"."RETURN_A_BOOK" (member_id_temp IN number, book_id_temp IN number) 
+AS
+BEGIN
+UPDATE TRANSACTIONS set return_date=sysdate 
+where member_id=member_id_temp
+AND book_id=book_id_temp
+AND return_date IS NULL;
+END;
+
+/
